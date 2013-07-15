@@ -34,7 +34,8 @@ module Kali
         attr_reader name
 
         define_method "#{name}=" do |value|
-          instance_variable_set("@#{name}", type.new(value))
+          property = type === value ? value : type.new(value)
+          instance_variable_set("@#{name}", property)
         end
       else
         ivar = "@#{name}"
