@@ -48,9 +48,32 @@ module Kali
       end
     end
 
+    # Public: Add a family of sub-components to this component.
+    #
+    # type - The type (class) of sub-component being added.
+    #
+    # Returns nothing.
+    def self.sub_component(type)
+      name = type.method_name
+      sub_component_list << name
+
+      ivar = "@#{name}"
+      define_method name do
+        if instance_variable_get(ivar).nil?
+          instance_variable_set(ivar, TypedList.new(type))
+        end
+        instance_variable_get(ivar)
+      end
+    end
+
     # Internal: List of properties added to this component.
     def self.property_list
       @property_list ||= {}
+    end
+
+    # Internal: List of sub-components added to this component.
+    def self.sub_component_list
+      @sub_component_list ||= []
     end
 
     # Public: Initialize the component.
@@ -69,9 +92,18 @@ module Kali
         value && value.to_ics
       end
 
-      ["BEGIN:#{self.class.name}",
-       *properties.compact,
-       "END:#{self.class.name}"].join("\r\n")
+      sub_components = self.class.sub_component_list.map do |comp|
+        public_send(comp).to_ics
+      end
+
+      lines = [
+        "BEGIN:#{self.class.name}",
+        *properties.compact,
+        *sub_components.compact,
+        "END:#{self.class.name}"
+      ]
+
+      lines.reject { |s| s.empty? }.join("\r\n")
     end
   end
 end

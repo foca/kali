@@ -1,9 +1,12 @@
 require "kali/component"
 require "kali/property/calendar_properties"
+require "kali/component/event"
 
 module Kali
   class Calendar < Component
     name "VCALENDAR"
+
+    sub_component Event
 
     property Property::ProductIdentifier, 1
     property Property::Version, 1

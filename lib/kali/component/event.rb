@@ -4,6 +4,7 @@ require "kali/property/component_properties"
 module Kali
   class Event < Component
     name "VEVENT"
+    method_name :events
 
     property Property::UniqueIdentifier, 1
     property Property::SequenceNumber, 1
