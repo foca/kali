@@ -1,5 +1,5 @@
 require "kali/property"
-require "kali/property_list"
+require "kali/typed_list"
 
 module Kali
   class Component
@@ -37,7 +37,7 @@ module Kali
         ivar = "@#{name}"
         define_method name do
           if instance_variable_get(ivar).nil?
-            instance_variable_set(ivar, PropertyList.new(type))
+            instance_variable_set(ivar, TypedList.new(type))
           end
           instance_variable_get(ivar)
         end
