@@ -1,15 +1,12 @@
 require "kali/type"
 require "kali/text_utils"
+require "kali/utils/named"
 
 module Kali
   # Public: Properties are the definition of an attribute describing a
   # component.
   class Property
-    # Public: Get/Set the name of the property implemented by this class.
-    def self.name(name = nil)
-      @name = name if name
-      @name
-    end
+    extend Utils::Named
 
     # Public: Get/Set the Type of the property implemented by this class.
     def self.type(type = nil)
@@ -21,14 +18,6 @@ module Kali
     def self.default(default = nil)
       @default = default if default
       @default
-    end
-
-    # Public: Get/Set a name for the method used as an accessor for this
-    # property, based on the name of the property.
-    def self.method_name(method_name = nil)
-      @method_name ||= name.to_s.downcase.gsub("-", "_") unless name.nil?
-      @method_name = method_name if method_name
-      @method_name
     end
 
     # Public: Get/Set the value of this specific instance of the property.

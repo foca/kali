@@ -1,8 +1,11 @@
 require "kali/property"
 require "kali/typed_list"
+require "kali/utils/named"
 
 module Kali
   class Component
+    extend Utils::Named
+
     # Public: Sugar for specifying unbounded ranges.
     #
     # Examples:
@@ -47,12 +50,6 @@ module Kali
     # Internal: List of properties added to this component.
     def self.property_list
       @property_list ||= {}
-    end
-
-    # Public: Get/Set the name of this component.
-    def self.name(name = nil)
-      @name = name if name
-      @name
     end
 
     # Public: Initialize the component.
