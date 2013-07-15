@@ -21,7 +21,7 @@ cal = Kali::Calendar.new do |calendar|
     event.location = "The Venue"
 
     event.dtstart = DateTime.new(2013, 7, 31, 18, 00, 00)
-    event.duration = "PT45M"
+    event.duration = { minute: 45 }
   end
 end
 
