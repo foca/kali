@@ -1,5 +1,5 @@
 require "kali/component"
-require "kali/property/component_properties"
+require "kali/properties"
 
 module Kali
   class Event < Component

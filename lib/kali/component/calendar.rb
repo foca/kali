@@ -1,5 +1,5 @@
 require "kali/component"
-require "kali/property/calendar_properties"
+require "kali/properties"
 require "kali/component/event"
 
 module Kali
