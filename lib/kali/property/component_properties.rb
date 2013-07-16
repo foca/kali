@@ -1,5 +1,6 @@
 require "kali/property"
 require "kali/type"
+require "kali/parameters"
 require "securerandom"
 
 module Kali
@@ -27,6 +28,9 @@ module Kali
   class Property::Summary < Property
     name "SUMMARY"
     type Type::Text.new
+
+    parameter Parameter::Language
+    parameter Parameter::AlternateRepresentation
   end
 
   # Longer description of the current component.
@@ -35,6 +39,9 @@ module Kali
   class Property::Description < Property
     name "DESCRIPTION"
     type Type::Text.new
+
+    parameter Parameter::Language
+    parameter Parameter::AlternateRepresentation
   end
 
   # Lat/Lng pair indicating where this component takes place.
@@ -51,6 +58,9 @@ module Kali
   class Property::Location < Property
     name "LOCATION"
     type Type::Text.new
+
+    parameter Parameter::Language
+    parameter Parameter::AlternateRepresentation
   end
 
   # How important is this component compared to others. Can be 0 (no special
@@ -69,6 +79,9 @@ module Kali
   class Property::Categories < Property
     name "CATEGORIES"
     type Type::List.new(Type::Text.new)
+
+    parameter Parameter::Language
+    parameter Parameter::AlternateRepresentation
   end
 
   # List of resources needed to be able to fulfill this component. For example
@@ -78,6 +91,9 @@ module Kali
   class Property::Resources < Property
     name "RESOURCES"
     type Type::List.new(Type::Text.new)
+
+    parameter Parameter::Language
+    parameter Parameter::AlternateRepresentation
   end
 
   # User provided comments about the current component. Can be specified
@@ -88,6 +104,9 @@ module Kali
     name "COMMENT"
     type Type::Text.new
     method_name :comments
+
+    parameter Parameter::Language
+    parameter Parameter::AlternateRepresentation
   end
 
   # Status representing whether the event is taking place or not.
@@ -108,6 +127,8 @@ module Kali
   class Property::EndDateTime < Property
     name "DTEND"
     type Type::DateTime.new
+
+    parameter Parameter::TimeZoneIdentifier
   end
 
   # Start date of a component.
@@ -119,6 +140,8 @@ module Kali
   class Property::StartDateTime < Property
     name "DTSTART"
     type Type::DateTime.new
+
+    parameter Parameter::TimeZoneIdentifier
   end
 
   # Duration of the component.
@@ -145,6 +168,18 @@ module Kali
   class Property::Attendee < Property
     name "ATTENDEE"
     type Type::CalAddress.new
+    method_name :attendees
+
+    parameter Parameter::CommonName
+    parameter Parameter::CalendarUserType
+    parameter Parameter::Delegators
+    parameter Parameter::Delegatees
+    parameter Parameter::DirectoryEntry
+    parameter Parameter::GroupMemberships
+    parameter Parameter::EventParticipationStatus
+    parameter Parameter::ParticipationRole
+    parameter Parameter::RSVPExpectation
+    parameter Parameter::SentBy
   end
 
   # Represent the party organizing the event.
@@ -162,6 +197,9 @@ module Kali
   class Property::Contact < Property
     name "CONTACT"
     type Type::Text.new
+
+    parameter Parameter::Language
+    parameter Parameter::AlternateRepresentation
   end
 
   # External URL associated with this calendar component.

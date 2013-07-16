@@ -84,6 +84,8 @@ module Kali
     autoload :Duration,   "kali/type/duration"
     autoload :URI,        "kali/type/uri"
     autoload :CalAddress, "kali/type/cal_address"
+    autoload :Quoted,     "kali/type/quoted"
+    autoload :Boolean,    "kali/type/boolean"
   end
 
   # Public: Helper class that allows us to easily restrict a value from a set of

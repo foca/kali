@@ -1,4 +1,5 @@
 require "kali"
+require "uri"
 
 cal = Kali::Calendar.new do |calendar|
   calendar.events.add do |event|
@@ -13,6 +14,19 @@ cal = Kali::Calendar.new do |calendar|
     event.dtend = DateTime.new(2013, 7, 31, 16, 00, 00)
 
     event.comments.add "I'm sure the talk will be a disaster --The Speaker"
+    event.comments.add "Estoy convencido de que va a ser buena" do |comment|
+      comment.language = "es"
+    end
+
+    event.attendees.add URI.parse("mailto:john@example.org") do |attendee|
+      attendee.partstat = "ACCEPTED"
+      attendee.role = "CHAIR"
+    end
+
+    event.attendees.add URI.parse("mailto:jane@example.org") do |attendee|
+      # the property parameters can be specified as if the property was a Hash.
+      attendee["PARTSTAT"] = "DECLINED"
+    end
   end
 
   calendar.events.add do |event|
