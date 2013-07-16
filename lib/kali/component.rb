@@ -103,7 +103,7 @@ module Kali
         "END:#{self.class.name}"
       ]
 
-      lines.reject { |s| s.empty? }.join("\r\n")
+      lines.reject { |s| s.empty? }.join("\n")
     end
   end
 end

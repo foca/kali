@@ -39,7 +39,7 @@ module Kali
     #
     # Returns a String.
     def to_ics
-      @items.map(&:to_ics).join("\r\n")
+      @items.map(&:to_ics).join("\n")
     end
 
     # Internal: Iterate over the properties in this list.
