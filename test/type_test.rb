@@ -88,6 +88,10 @@ class TypeTest < MiniTest::Unit::TestCase
     type = Kali::Type::Time.new
     assert_equal "103000", type.encode(Time.parse("10:30"))
     assert_equal Time.parse("10:45:30"), type.decode("104530")
+
+    assert_equal "103000Z", type.encode(Time.parse("10:30 UTC"))
+    assert_equal Time.parse("10:45:30 UTC"), type.decode("104530Z")
+
     assert_idempotent type, Time.parse("13:10:05")
   end
 
@@ -95,13 +99,18 @@ class TypeTest < MiniTest::Unit::TestCase
     type = Kali::Type::Date.new
     assert_equal "20130731", type.encode(Date.parse("2013-07-31"))
     assert_equal Date.parse("2012-02-29"), type.decode("20120229")
+
     assert_idempotent type, Date.parse("2013-04-30")
   end
 
   def test_date_time
     type = Kali::Type::DateTime.new
-    assert_equal "20130731T103000", type.encode(DateTime.parse("2013-07-31 10:30:00"))
+    assert_equal "20130731T103000", type.encode(DateTime.parse("2013-07-31 10:30:00 +02:00"))
     assert_equal DateTime.parse("1985-03-27 20:23:15"), type.decode("19850327T202315")
+
+    assert_equal "20130731T103000Z", type.encode(DateTime.parse("2013-07-31 10:30:00 UTC"))
+    assert_equal DateTime.parse("1985-03-27 20:23:15 UTC"), type.decode("19850327T202315Z")
+
     assert_idempotent type, DateTime.parse("2000-01-01 00:00:00")
   end
 

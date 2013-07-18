@@ -6,18 +6,14 @@ module Kali
   # FIXME: Not handling time zones. At all. Yet.
   #
   # See http://tools.ietf.org/html/rfc5545#section-3.3.12
-  class Type::Time < Type
-    def parameters
-      { Parameter::TimeZoneIdentifier => :tzid }
-    end
-
-    def encode!(object)
-      object.to_time.strftime("%H%M%S")
+  class Type::Time < Type::DateTime
+    def encode!(*)
+      super.split("T").last
     end
 
     def decode!(string)
-      _, hour, minute, second = *string.match(/(\d{2})(\d{2})(\d{2})?/)
-      ::Time.parse([hour, minute, second || "00"].join(":"))
+      _, hour, minute, second, utc = *string.match(/(\d{2})(\d{2})(\d{2})?(Z)?/)
+      ::Time.parse([hour, minute, second || "00"].join(":") + utc.to_s)
     end
   end
 end

@@ -12,11 +12,26 @@ module Kali
     end
 
     def encode!(object)
-      object.to_datetime.strftime("%Y%m%dT%H%M%S")
+      date_time = object.to_datetime
+      date_time.strftime("%Y%m%dT%H%M%S#{detect_timezone(date_time)}")
     end
 
     def decode!(string)
       ::DateTime.parse(string)
+    end
+
+    private
+
+    def detect_timezone(date_time)
+      offset = date_time.to_datetime.zone
+      sign, hour, minute = offset.scan(/(\+|-)(\d{2}):(\d{2})/).flatten
+      offset = Integer("#{sign}1") * (60 * Integer(minute) + 3600 * Integer(hour))
+
+      if offset.zero?
+        "Z"
+      else
+        ""
+      end
     end
   end
 end
