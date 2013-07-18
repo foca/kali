@@ -6,10 +6,10 @@ module Kali
   class Calendar < Component
     name "VCALENDAR"
 
-    sub_component Event
+    component Event, :events
 
-    property Property::ProductIdentifier, 1
-    property Property::Version, 1
+    property Property::ProductIdentifier
+    property Property::Version
     property Property::CalendarScale
     property Property::Method
 

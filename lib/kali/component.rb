@@ -6,74 +6,89 @@ module Kali
   class Component
     extend Utils::Named
 
-    # Public: Sugar for specifying unbounded ranges.
+    # Public: Add a property to this component. This property will appear 0 or 1
+    # times in this component. If you want to add a property that can appear
+    # multiple times in the component, look at `Component.property_list`.
     #
-    # Examples:
+    # Example
     #
-    #   0..N
-    #   1..N
-    N = 1 / 0.0
-
-    # Public: Add a property to this component.
+    #   class Event < Kali::Component
+    #     property Kali::Property::Summary
+    #     property Kali::Property::Description, :desc
+    #   end
+    #
+    #   Event.new do |event|
+    #     event.summary = "Summary"
+    #     event.desc = "Description"
+    #   end
     #
     # type   - The class that defines the property. Must be a Kali::Property
     #          subclass.
-    # amount - A Range specifying how many instances of this property are
-    #          allowed in this component. If the range's `min` is 0 then this
-    #          property is optional. If the `max` is 1 then this is a single
-    #          instance property. If there's no limit to the amount of instances
-    #          of this property, use `N` as the `max`.
+    # method - The name of the method under which to mount this property.
     #
     # Returns nothing.
-    def self.property(type, amount = 0..1)
-      name = type.method_name
-      amount = amount..amount if Numeric === amount
-      property_list[name] = amount
+    def self.property(type, method = type.method_name)
+      define_method method do
+        properties[type.name] ||= type.new
+      end
 
-      if amount.max == 1
-        attr_reader name
-
-        define_method "#{name}=" do |value|
-          property = type === value ? value : type.new(value)
-          instance_variable_set("@#{name}", property)
-        end
-      else
-        ivar = "@#{name}"
-        define_method name do
-          if instance_variable_get(ivar).nil?
-            instance_variable_set(ivar, TypedList.new(type))
-          end
-          instance_variable_get(ivar)
-        end
+      define_method "#{method}=" do |value|
+        property = type === value ? value : type.new(value)
+        properties[type.name] = property
       end
     end
 
-    # Public: Add a family of sub-components to this component.
+    # Public: Add a family of properties to this component. This adds a property
+    # that can appear multiple times in this component. If you need a property
+    # that appears at most once in the component, look at `Component.property`.
     #
-    # type - The type (class) of sub-component being added.
+    # Example
+    #
+    #   class Event < Kali::Component
+    #     property_list Kali::Property::Attendee, :attendees
+    #   end
+    #
+    #   Event.new do |event|
+    #     event.attendees.add do |attendee|
+    #       ...
+    #     end
+    #   end
+    #
+    # type   - The class that defines the property. Must be a Kali::Property
+    #          subclass.
+    # method - The name of the method under which to mount this property.
     #
     # Returns nothing.
-    def self.sub_component(type)
-      name = type.method_name
-      sub_component_list << name
-
-      ivar = "@#{name}"
-      define_method name do
-        if instance_variable_get(ivar).nil?
-          instance_variable_set(ivar, TypedList.new(type))
-        end
-        instance_variable_get(ivar)
+    def self.property_list(type, method = type.method_name)
+      define_method method do
+        properties[type.name] ||= TypedList.new(type)
       end
     end
 
-    # Internal: List of properties added to this component.
-    def self.property_list
-      @property_list ||= {}
-    end
-
-    # Internal: List of sub-components added to this component.
-    def self.sub_component_list
-      @sub_component_list ||= []
+    # Public: Add a family of components to this component. This exposes a list
+    # to which you can add sub-components.
+    #
+    # Example
+    #
+    #   class Calendar < Kali::Component
+    #     component Kali::Event, :events
+    #   end
+    #
+    #   Calendar.new do |cal|
+    #     cal.events.add do |event|
+    #       ...
+    #     end
+    #   end
+    #
+    # type   - The class that defines the component. Must be a Kali::Component
+    #          subclass.
+    # method - The name of the method under which to mount this property.
+    #
+    # Returns nothing.
+    def self.component(type, method = type.method_name)
+      define_method method do
+        components[type.name] ||= TypedList.new(type)
+      end
     end
 
     # Public: Initialize the component.
@@ -87,23 +102,31 @@ module Kali
     #
     # Returns a String.
     def to_ics
-      properties = self.class.property_list.keys.map do |prop|
-        value = public_send(prop)
-        value && value.to_ics
-      end
-
-      sub_components = self.class.sub_component_list.map do |comp|
-        public_send(comp).to_ics
-      end
+      properties = self.properties.map { |_, value| value.to_ics }
+      components = self.components.map { |_, value| value.to_ics }
 
       lines = [
         "BEGIN:#{self.class.name}",
         *properties.compact,
-        *sub_components.compact,
+        *components.compact,
         "END:#{self.class.name}"
       ]
 
       lines.reject { |s| s.empty? }.join("\n")
+    end
+
+    # Internal: List of properties stored in this component.
+    #
+    # Returns a Hash.
+    def properties
+      @properties ||= {}
+    end
+
+    # Internal: List of sub-components that form this component.
+    #
+    # Returns a Hash.
+    def components
+      @components ||= {}
     end
   end
 end
