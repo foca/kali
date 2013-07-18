@@ -11,27 +11,35 @@ module Kali
     # type - A subclass of Kali::Parameter.
     #
     # Returns nothing.
-    def self.parameter(type)
-      name = type.method_name
-      parameters[type.name] = type
+    def self.parameter(type, method = type.method_name)
+      default_parameter_types[type.name] = type
 
-      define_method name do
-        @parameters[type.name]
+      define_method method do
+        parameters[type.name] ||= type.new
       end
 
-      define_method "#{name}=" do |value|
-        @parameters[type.name] = type.wrap(value)
+      define_method "#{method}=" do |value|
+        parameters[type.name] = type.wrap(value)
       end
     end
 
-    # Internal: Possible parameters that instances of this Property can have.
-    def self.parameters
-      @parameters ||= {}
+    # Internal: List of parameter types added to the class explicitly. Any
+    # parameter added that is not in this store will be assumed to be a simple
+    # Type::Text parameter. See `Property#[]=`.
+    def self.default_parameter_types
+      @parameter_types ||= {}
     end
 
     def initialize(*) # :nodoc:
       super
-      @parameters = {}
+    end
+
+    # Internal: Storage of parameters associated with this instance of the
+    # property.
+    #
+    # Returns a Hash.
+    def parameters
+      @parameters ||= {}
     end
 
     # Public: Get a parameter by iCalendar name.
@@ -40,7 +48,7 @@ module Kali
     #
     # Returns the passed in value.
     def [](name)
-      @parameters[name]
+      parameters[name]
     end
 
     # Public: Set a parameter manually by explicitly passing the iCalendar name
@@ -49,35 +57,28 @@ module Kali
     # name  - A String with the name of the parameter. If there's a typed
     #         parameter for this name already, this will be equivalent to
     #         setting that parameter via the setter. Otherwise it will assume
-    #         this is a Text parameter and set it. This is the only way right
-    #         now to set "experimental" (X-*) params.
+    #         this is a Text parameter and set it. Useful for setting
+    #         experimental ("X-*") params, such as "X-GUEST-COUNT".
     # value - The value of the param.
     #
     # Returns the passed in value.
     def []=(name, value)
-      param = if type = lookup_parameter_type(name)
+      param = if type = self.class.default_parameter_types.fetch(name, false)
         type.wrap(value)
       else
         Parameter::Default.new(name, value)
       end
 
-      @parameters[name] = param
+      parameters[name] = param
     end
 
     # Public: Generate an iCalendar representation of this property.
     #
     # Returns a String.
     def to_ics
-      params = @parameters.map { |_, value| value.to_ics }.join("")
+      params = parameters.map { |_, value| value.to_ics }.join("")
       encoded_value = self.class.type.encode(value)
       TextUtils.fold_line "#{self.class.name}#{params}:#{encoded_value}"
-    end
-
-    # Internal: Determine the type for a parameter set via #[]=
-    #
-    # Returns a subclass of Kali::Type.
-    def lookup_parameter_type(name)
-      self.class.parameters.fetch(name, nil)
     end
   end
 end
