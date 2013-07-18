@@ -16,7 +16,7 @@ module Kali
     end
 
     def decode!(string)
-      DateTime.parse(string)
+      ::DateTime.parse(string)
     end
   end
 end

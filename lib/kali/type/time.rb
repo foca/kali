@@ -12,12 +12,12 @@ module Kali
     end
 
     def encode!(object)
-      object.to_time.strftime("%H%m%s")
+      object.to_time.strftime("%H%M%S")
     end
 
     def decode!(string)
       _, hour, minute, second = *string.match(/(\d{2})(\d{2})(\d{2})?/)
-      Time.parse([hour, minute, second || "00"].join(":"))
+      ::Time.parse([hour, minute, second || "00"].join(":"))
     end
   end
 end
