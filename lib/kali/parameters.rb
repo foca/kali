@@ -47,7 +47,6 @@ module Kali
   # See http://tools.ietf.org/html/rfc5545#section-3.2.4
   class Parameter::Delegators < Parameter
     name "DELEGATED-FROM"
-    method_name :delegators
     type Type::List.new(Type::Quoted.new(Type::CalAddress.new))
   end
 
@@ -57,7 +56,6 @@ module Kali
   # See http://tools.ietf.org/html/rfc5545#section-3.2.5
   class Parameter::Delegatees < Parameter
     name "DELEGATED-TO"
-    method_name :delegatees
     type Type::List.new(Type::Quoted.new(Type::CalAddress.new))
   end
 
@@ -101,7 +99,6 @@ module Kali
   # See http://tools.ietf.org/html/rfc5545#section-3.2.11
   class Parameter::GroupMemberships < Parameter
     name "MEMBER"
-    method_name :memberships
     type Type::List.new(Type::Quoted.new(Type::CalAddress.new))
   end
 

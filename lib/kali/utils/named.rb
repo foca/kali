@@ -7,12 +7,10 @@ module Kali
         @name
       end
 
-      # Public: Get/Set a name for the method used as an accessor for this
+      # Public: Get a default name for the method used as an accessor for this
       # property, based on the name of the property.
-      def method_name(method_name = nil)
+      def method_name
         @method_name ||= name.to_s.downcase.gsub("-", "_") unless name.nil?
-        @method_name = method_name if method_name
-        @method_name
       end
     end
   end

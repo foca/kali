@@ -126,7 +126,6 @@ module Kali
   class Property::Comment < Property
     name "COMMENT"
     type Type::Text.new
-    method_name :comments
   end
 
   # Status representing whether the event is taking place or not.
@@ -184,7 +183,6 @@ module Kali
   class Property::Attendee < Property
     name "ATTENDEE"
     type Type::CalAddress.new
-    method_name :attendees
   end
 
   # Represent the party organizing the event.
