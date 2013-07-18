@@ -1,6 +1,3 @@
-require "kali/parameter"
-require "kali/type"
-
 module Kali
   # Public: Meta-property that represents any user-defined property not
   # currently implemented in the system.

@@ -1,5 +1,4 @@
 require "time"
-require "kali/type"
 
 module Kali
   # Used to represent precise times of the day.

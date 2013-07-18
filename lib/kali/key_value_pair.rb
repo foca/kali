@@ -1,5 +1,3 @@
-require "kali/utils/named"
-
 module Kali
   class KeyValuePair
     extend Utils::Named

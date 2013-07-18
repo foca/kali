@@ -1,5 +1,3 @@
-require "kali/type"
-
 module Kali
   # Used to represent floating point numbers.
   #

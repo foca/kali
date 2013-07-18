@@ -1,7 +1,3 @@
-require "kali/property"
-require "kali/typed_list"
-require "kali/utils/named"
-
 module Kali
   class Component
     extend Utils::Named

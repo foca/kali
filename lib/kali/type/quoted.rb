@@ -1,5 +1,3 @@
-require "kali/type"
-
 module Kali
   # Meta-type that just wraps a different type in double quote characters when
   # encoding it, or takes out the quotes when decoding it.

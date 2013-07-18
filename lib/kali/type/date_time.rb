@@ -1,5 +1,4 @@
 require "date"
-require "kali/type"
 
 module Kali
   # Used to represent a precise calendar date and time of day.

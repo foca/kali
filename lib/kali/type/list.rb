@@ -1,5 +1,3 @@
-require "kali/type"
-
 module Kali
   # Meta type (not explicitly defined in the RFC as a property type) to parse
   # and serialize lists of other values. Lists are strongly typed, with elements

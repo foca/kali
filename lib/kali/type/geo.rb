@@ -1,5 +1,3 @@
-require "kali/type"
-
 module Kali
   # Meta type (not defined in the RFC) for parsing and serializing
   # GeographicPosition properties.

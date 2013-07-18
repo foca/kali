@@ -1,5 +1,3 @@
-require "kali/type"
-
 module Kali
   class Type::Boolean < Type
     def initialize(requirement = nil)

@@ -1,8 +1,3 @@
-require "securerandom"
-require "kali/property"
-require "kali/type"
-require "kali/version"
-
 module Kali
   # Identifier for the product that created this iCalendar object.
   #

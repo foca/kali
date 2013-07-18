@@ -1,7 +1,3 @@
-require "kali/type"
-require "kali/key_value_pair"
-require "kali/utils/text"
-
 module Kali
   # Public: Properties are the definition of an attribute describing a
   # component.

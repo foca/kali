@@ -1,5 +1,3 @@
-require "kali/type"
-
 module Kali
   # Used to represent a duration of time, which can be nominal (days or weeks)
   # or accurate (hours, days, minutes, or seconds).

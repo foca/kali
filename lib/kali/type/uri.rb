@@ -1,4 +1,3 @@
-require "kali/type"
 require "uri"
 
 module Kali
