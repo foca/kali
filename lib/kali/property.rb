@@ -1,6 +1,6 @@
 require "kali/type"
 require "kali/key_value_pair"
-require "kali/text_utils"
+require "kali/utils/text"
 
 module Kali
   # Public: Properties are the definition of an attribute describing a
@@ -91,7 +91,7 @@ module Kali
     def to_ics
       params = parameters.map { |_, value| value.to_ics }.join("")
       encoded_value = self.class.type.encode(value)
-      TextUtils.fold_line "#{self.class.name}#{params}:#{encoded_value}"
+      Utils::Text.fold_line "#{self.class.name}#{params}:#{encoded_value}"
     end
   end
 end
