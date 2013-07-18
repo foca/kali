@@ -23,6 +23,19 @@ module Kali
       end
     end
 
+    # Public: Register the type of this property, and all the parameters
+    # associated with that type, or get the current type of the object.
+    #
+    # See `KeyValuePair.type`.
+    def self.type(type = nil)
+      if type
+        type.parameters.each do |param, method|
+          parameter(param, method)
+        end
+      end
+      super
+    end
+
     # Internal: List of parameter types added to the class explicitly. Any
     # parameter added that is not in this store will be assumed to be a simple
     # Type::Text parameter. See `Property#[]=`.

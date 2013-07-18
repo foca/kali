@@ -32,6 +32,15 @@ module Kali
       @restriction = restriction
     end
 
+    # Public: Parameters added by deafult to properties that are of this type.
+    #
+    # Returns an Array where each entry is a Hash keyed by a subclass of
+    # Kali::Parameter, and the value is a Symbol with the name of the method for
+    # that property.
+    def parameters
+      []
+    end
+
     # Public: Encode an object into an iCalendar-compatible String using the
     # format specific to this Type.
     #

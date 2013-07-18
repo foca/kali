@@ -8,6 +8,10 @@ module Kali
   #
   # See http://tools.ietf.org/html/rfc5545#section-3.3.5
   class Type::DateTime < Type
+    def parameters
+      { Parameter::TimeZoneIdentifier => :tzid }
+    end
+
     def encode!(object)
       object.to_datetime.strftime("%Y%m%dT%H%M%S")
     end

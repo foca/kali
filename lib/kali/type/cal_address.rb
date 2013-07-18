@@ -10,5 +10,20 @@ module Kali
     def initialize
       super(::URI::MailTo)
     end
+
+    def parameters
+      {
+        Parameter::CommonName               => :cn,
+        Parameter::CalendarUserType         => :cutype,
+        Parameter::Delegators               => :delegators,
+        Parameter::Delegatees               => :delegatees,
+        Parameter::DirectoryEntry           => :dir,
+        Parameter::GroupMemberships         => :members,
+        Parameter::EventParticipationStatus => :partstat,
+        Parameter::ParticipationRole        => :role,
+        Parameter::RSVPExpectation          => :rsvp,
+        Parameter::SentBy                   => :sent_by
+      }
+    end
   end
 end

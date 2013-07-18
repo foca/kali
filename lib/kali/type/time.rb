@@ -8,6 +8,10 @@ module Kali
   #
   # See http://tools.ietf.org/html/rfc5545#section-3.3.12
   class Type::Time < Type
+    def parameters
+      { Parameter::TimeZoneIdentifier => :tzid }
+    end
+
     def encode!(object)
       object.to_time.strftime("%H%m%s")
     end
