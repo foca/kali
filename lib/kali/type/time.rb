@@ -3,8 +3,6 @@ require "time"
 module Kali
   # Used to represent precise times of the day.
   #
-  # FIXME: Not handling time zones. At all. Yet.
-  #
   # See http://tools.ietf.org/html/rfc5545#section-3.3.12
   class Type::Time < Type::DateTime
     def encode!(*)

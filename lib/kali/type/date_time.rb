@@ -3,8 +3,6 @@ require "date"
 module Kali
   # Used to represent a precise calendar date and time of day.
   #
-  # FIXME: Not handling time zones. At all. Yet.
-  #
   # See http://tools.ietf.org/html/rfc5545#section-3.3.5
   class Type::DateTime < Type
     def parameters
