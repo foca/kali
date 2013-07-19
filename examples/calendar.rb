@@ -5,7 +5,10 @@ cal = Kali::Calendar.new do |calendar|
   calendar.events.add do |event|
     event.uid = 1
     event.summary = "Conference Talk"
+
     event.description = "A description of the talk"
+    event.description.language = "en" # setting parameters on properties.
+
     event.location = "The Venue"
     event.geo = [-54.458594, -34.123310]
     event.categories = ["CATEGORY A", "CATEGORY B"]
