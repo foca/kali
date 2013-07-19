@@ -23,6 +23,8 @@ module Kali
     def detect_timezone(date_time)
       offset = date_time.to_datetime.zone
       sign, hour, minute = offset.scan(/(\+|-)(\d{2}):(\d{2})/).flatten
+      hour.gsub!(/^0/, "")
+      minute.gsub!(/^0/, "")
       offset = Integer("#{sign}1") * (60 * Integer(minute) + 3600 * Integer(hour))
 
       if offset.zero?

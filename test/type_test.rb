@@ -106,6 +106,7 @@ class TypeTest < MiniTest::Unit::TestCase
   def test_date_time
     type = Kali::Type::DateTime.new
     assert_equal "20130731T103000", type.encode(DateTime.parse("2013-07-31 10:30:00 +02:00"))
+    assert_equal "20130731T103000", type.encode(DateTime.parse("2013-07-31 10:30:00 +09:00"))
     assert_equal DateTime.parse("1985-03-27 20:23:15"), type.decode("19850327T202315")
 
     assert_equal "20130731T103000Z", type.encode(DateTime.parse("2013-07-31 10:30:00 UTC"))
