@@ -17,7 +17,7 @@ module Kali
         tail &&= tail.scan(/.{0,74}/)
           .reject { |fragment| fragment.nil? || fragment.empty? }
           .map { |fragment| " #{fragment}" }
-        [head, *tail].join("\r\n")
+        [head, *tail].join("\n")
       end
 
       # Public: Collapse a folded line into a single line without line breaks. See
@@ -33,7 +33,7 @@ module Kali
       #
       # Returns a String.
       def unfold_line(lines)
-        head, *tail = lines.split("\r\n")
+        head, *tail = lines.split("\n")
         tail.map! { |line| line[1..-1] }
         [head, *tail].join("")
       end
