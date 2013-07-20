@@ -1,5 +1,4 @@
 require "kali"
-require "uri"
 
 cal = Kali::Calendar.new do |calendar|
   calendar.events.add do |event|
@@ -13,10 +12,20 @@ cal = Kali::Calendar.new do |calendar|
     event.geo = [-54.458594, -34.123310]
     event.categories = ["CATEGORY A", "CATEGORY B"]
 
-    event.dtstart = DateTime.civil(2013, 7, 31, 15, 00, 00, "-07:00")
+    event.dtstart = Time.parse("2013-07-31T15:00:00-07:00")
     event.dtstart.tzid = "America/Los_Angeles"
-    event.dtend = DateTime.civil(2013, 7, 31, 16, 00, 00, "-07:00")
-    event.dtend.tzid = "America/Los_Angeles"
+
+    # Not specifying the tzid manually it will try to extract it from the
+    # Time/DateTime instance. HOWEVER, given ruby's implementation of time, this
+    # only works for the *local* time, or UTC.
+    #
+    # If you pass something with an offset that doesn't match the local time,
+    # ruby will convert this to local time, and use that time instead.
+    #
+    # So if you want timezone detection, you probably want to pass in values
+    # that use a more advanced Time implementation, like
+    # ActiveSupport::TimeWithZone. Or just set the tzid parameter manually.
+    event.dtend = Time.parse("2013-07-31T16:00:00-07:00")
 
     event.comments.add "I'm sure the talk will be a disaster --The Speaker"
     event.comments.add "Estoy convencido de que va a ser buena" do |comment|

@@ -16,4 +16,6 @@ Gem::Specification.new do |spec|
   spec.homepage    = "https://github.com/foca/kali"
   spec.files       = `git ls-files`.split("\n")
   spec.platform    = Gem::Platform::RUBY
+
+  spec.add_dependency "tzinfo"
 end

@@ -141,6 +141,7 @@ module Kali
   class Property::EndDateTime < Property
     name "DTEND"
     type Type::DateTime.new
+    include Property::TimezoneDetection
   end
 
   # Start date of a component.
@@ -152,6 +153,7 @@ module Kali
   class Property::StartDateTime < Property
     name "DTSTART"
     type Type::DateTime.new
+    include Property::TimezoneDetection
   end
 
   # Duration of the component.

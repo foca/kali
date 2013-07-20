@@ -30,7 +30,7 @@ module Kali
     #
     # value - Any value that can be set for this KV-pair.
     def initialize(value = self.class.default)
-      @value = value
+      self.value = value
     end
 
     # Public: Generate an iCalendar representation of this KV-pair.
