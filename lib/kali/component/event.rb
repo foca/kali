@@ -15,6 +15,7 @@ module Kali
     property Property::Resources
     property Property::Categories
     property Property::EventStatus
+    property Property::GeneratedTime
     property Property::StartDateTime
     property Property::EndDateTime
     property Property::Duration
