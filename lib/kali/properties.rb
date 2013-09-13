@@ -169,6 +169,19 @@ module Kali
     include Property::TimezoneDetection
   end
 
+  # This property specifies the date and time that the information associated
+  # with the calendar component was last revised in the calendar store.
+  #
+  # TODO: This can be a DateTime or a Date. We should take that into
+  # consideration.
+  #
+  # As per http://tools.ietf.org/html/rfc5545#section-3.8.7.3
+  class Property::LastModifiedTime < Property
+    name "LAST-MODIFIED"
+    type Type::DateTime.new
+    include Property::TimezoneDetection
+  end
+
   # Duration of the component.
   #
   # As per http://tools.ietf.org/html/rfc5545#section-3.8.2.5
