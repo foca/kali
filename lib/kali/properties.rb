@@ -131,6 +131,19 @@ module Kali
     type Type::Text.new(Enum["TENTATIVE", "CONFIRMED", "CANCELLED"])
   end
 
+  # The property indicates the date/time that the instance of the iCalendar
+  # object was created.
+  #
+  # TODO: This can be a DateTime or a Date. We should take that into
+  # consideration.
+  #
+  # As per http://tools.ietf.org/html/rfc5545#section-3.8.7.2
+  class Property::GeneratedTime < Property
+    name "DTSTAMP"
+    type Type::DateTime.new
+    include Property::TimezoneDetection
+  end
+
   # End date of a component. This is required, unless there's a Duration, in
   # which case this can't appear.
   #
@@ -152,6 +165,19 @@ module Kali
   # As per http://tools.ietf.org/html/rfc5545#section-3.8.2.4
   class Property::StartDateTime < Property
     name "DTSTART"
+    type Type::DateTime.new
+    include Property::TimezoneDetection
+  end
+
+  # This property specifies the date and time that the information associated
+  # with the calendar component was last revised in the calendar store.
+  #
+  # TODO: This can be a DateTime or a Date. We should take that into
+  # consideration.
+  #
+  # As per http://tools.ietf.org/html/rfc5545#section-3.8.7.3
+  class Property::LastModifiedTime < Property
+    name "LAST-MODIFIED"
     type Type::DateTime.new
     include Property::TimezoneDetection
   end
