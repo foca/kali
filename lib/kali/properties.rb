@@ -1,4 +1,10 @@
 module Kali
+  # Name of the calendar.
+  class Property::Name < Property
+    name "X-WR-CALNAME"
+    type Type::Text.new
+  end
+
   # Identifier for the product that created this iCalendar object.
   #
   # As per http://tools.ietf.org/html/rfc5545#section-3.7.3
