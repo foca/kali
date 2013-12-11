@@ -8,10 +8,11 @@ module Kali
 
     component Event, :events
 
-    property Property::ProductIdentifier
-    property Property::Version
     property Property::CalendarScale
     property Property::Method
+    property Property::Name
+    property Property::ProductIdentifier
+    property Property::Version
 
     def initialize
       self.prodid   = Property::ProductIdentifier.new
