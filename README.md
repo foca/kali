@@ -1,14 +1,12 @@
 # Kali: iCalendar for the rest of us
 
+**NOTE**: This is public but in no way finished. Probably safer to not use it in production.
+
 Kali attempts to provide a simple and extensible implementation of [RFC
 5545][rfc5545] and friends, which describe the iCalendar format, used for
 representing and exchanging calendaring and scheduling information.
 
 [Kālī][wikipedia] is also the Hindu Goddess of Time.
-
-![Kali: Goddess of Time and Change, by Raja Ravi Varma](
-  http://upload.wikimedia.org/wikipedia/commons/8/89/Kali_by_Raja_Ravi_Varma.jpg
-)
 
 ## Generating Calendars
 
